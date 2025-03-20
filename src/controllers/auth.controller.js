@@ -54,7 +54,7 @@ export const login =  async (req, res) => {
         //Establezco una cookie llamada 'token'y guardo el valor de la variable token en dicha cookie
         res.cookie('token', token)
 
-        res.status(200).json({ message: 'Login succesfull' })
+        res.status(200).json({ message: 'Login successfull' })
     } catch (error) {
         res.status(500).json({ message: 'An error occurred while trying to log in', error: error.message || error })
     }
@@ -66,7 +66,7 @@ export const logout = (_req, res) => {
         //Indico que la fecha de expiracion del token es 0 (no hay token)
         expires: new Date(0)
     })
-    return res.status(200).json({ message: 'Logout succesfull' })
+    return res.status(200).json({ message: 'Logout successfull' })
 }
 
 export const uProfile = async (req, res) => {
