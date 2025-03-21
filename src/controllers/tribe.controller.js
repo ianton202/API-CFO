@@ -14,13 +14,13 @@ export const getTribes = async (_req, res) => {
     }
 }
 
-export const getTribesById = async (req, res) => {
+export const getTribeById = async (req, res) => {
     try {
         const tribe = await Tribe.findById(req.params.id)
 
         res.status(200).json(tribe)
     } catch (error) {
-        res.status(500).json({ message: 'An error occurred while finding the tribe', error: error.message || error })
+        res.status(500).json({ message: 'An error occurred while trying to find the tribe', error: error.message || error })
     }
 }
 

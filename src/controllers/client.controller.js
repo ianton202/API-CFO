@@ -25,7 +25,7 @@ export const getClientById = async (req, res) => {
 
         res.status(200).json(client)
     } catch (error) {
-        res.status(500).json({ message: 'An error occurred when trying to find the client', error: error.message || error })
+        res.status(500).json({ message: 'An error occurred while trying to find the client', error: error.message || error })
     }
 }
 

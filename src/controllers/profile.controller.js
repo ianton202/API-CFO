@@ -20,7 +20,7 @@ export const getProfileById = async (req, res) => {
         
         res.status(200).json(profile)
     } catch (error) {
-        res.status(500).json({ message: 'An error occurred when trying to find the profile', error: error.message || error })
+        res.status(500).json({ message: 'An error occurred while trying to find the profile', error: error.message || error })
     }
 }
 

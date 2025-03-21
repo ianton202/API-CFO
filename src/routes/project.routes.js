@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { authRequired } from '../middlewares/validateToken.js'
 import {
     getProjects,
-    getProjectsById,
+    getProjectById,
     createProject,
     deleteProject,
     updateProject
@@ -11,7 +11,7 @@ import {
 const router = Router()
 
 router.get('/', authRequired, getProjects)
-router.get('/:id', authRequired, getProjectsById)
+router.get('/:id', authRequired, getProjectById)
 
 router.post('/', authRequired, createProject)
 

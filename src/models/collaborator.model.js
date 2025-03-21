@@ -6,17 +6,12 @@ const collaboratorSchema = new mongoose.Schema({
         required: true, //SI LO PONGO COMO ARRAY PUEDO AGREGAR UN STRING COMO VALOR QUE SEA EL MENSAJE QUE QUIERO QUE APAREZCA
         trim: true
     },
-    lastName: {
-        type: String,
-        required: true,
-        trim: true
-    },
     email: {
         type: String,
         required: true,
         trim: true
     },
-    profile: {
+    profile_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         trim: true,

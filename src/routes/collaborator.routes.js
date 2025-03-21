@@ -1,10 +1,22 @@
-import {Router} from 'express';
+import {Router} from 'express'
+import { authRequired } from '../middlewares/validateToken.js'
 import {
-    createCollaborator
-} from '../controllers/collaborator.controller.js';
+    getCollaboratorById,
+    getCollaborators,
+    createCollaborator,
+    deleteCollaborator,
+    updateCollaborator
+} from '../controllers/collaborator.controller.js'
 
-const router = Router();
+const router = Router()
 
-router.post('/createCollaborator', createCollaborator);
+router.get('/', authRequired, getCollaborators)
+router.get('/:id', authRequired, getCollaboratorById)
 
-export default router;
+router.post('/', authRequired, createCollaborator)
+
+router.delete('/:id', authRequired, deleteCollaborator)
+
+router.put('/:id', authRequired, updateCollaborator)
+
+export default router

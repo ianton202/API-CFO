@@ -2,7 +2,7 @@ import {Router} from 'express'
 import { authRequired } from '../middlewares/validateToken.js'
 import {
     getTribes,
-    getTribesById,
+    getTribeById,
     createTribe,
     deleteTribe,
     updateTribe
@@ -11,7 +11,7 @@ import {
 const router = Router()
 
 router.get('/', authRequired, getTribes)
-router.get('/:id', authRequired, getTribesById)
+router.get('/:id', authRequired, getTribeById)
 
 router.post('/', authRequired, createTribe)
 

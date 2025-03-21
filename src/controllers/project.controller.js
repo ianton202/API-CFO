@@ -14,7 +14,7 @@ export const getProjects = async (_req, res) => {
     }
 }
 
-export const getProjectsById = async (req, res) => {
+export const getProjectById = async (req, res) => {
     try {
         const project = await Project.findById(req.params.id)
         
@@ -43,7 +43,7 @@ export const createProject = async (req, res) => {
 
         const savedProject = await newProject.save()
         
-        res.status(200).json({ message: 'Project successfully created', data: savedProject})
+        res.status(200).json({ message: 'Project successfully created', data: savedProject })
     } catch (error) {
         res.status(500).json({ message: 'An error occurred while creating the project', error: error.message || error })
     }

@@ -19,7 +19,7 @@ export const getSectorById = async (req, res) => {
 
         res.status(200).json(sector)
     } catch (error) {
-        res.status(500).json({ message: 'An error occurred when trying to find the sector', error: error.message || error })
+        res.status(500).json({ message: 'An error occurred while trying to find the sector', error: error.message || error })
     }
 }
 
