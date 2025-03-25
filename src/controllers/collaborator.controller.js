@@ -51,7 +51,6 @@ export const createCollaborator = async (req, res) => {
             tribe_id,
             project_id
         })
-        
         const savedCollaborator = await newCollaborator.save()
 
         res.status(201).json({ message: 'Collaborator successully created', data: savedCollaborator })
@@ -77,7 +76,8 @@ export const deleteCollaborator = async (req, res) => {
 export const updateCollaborator = async (req, res) => {
     try {
         const updatedCollaborator = await Collaborator.findByIdAndUpdate(req.params.id, req.body, {
-            new: true
+            new: true,
+            runValidators: true
         })
 
         if(!updatedCollaborator) {

@@ -38,7 +38,6 @@ export const createTribe = async (req, res) => {
             name,
             collaborator_id
         })
-
         const savedTribe = await newTribe.save()
 
         res.status(200).json({ message: 'Tribe successfully created', data: savedTribe })
@@ -60,7 +59,8 @@ export const deleteTribe = async (req, res) => {
 export const updateTribe = async (req, res) => {
     try {
         const updatedTribe = await Tribe.findByIdAndUpdate(req.params.id, req.body, {
-            new: true
+            new: true,
+            runValidators: true
         })
 
         res.status(200).json({ message: 'Tribe updated successfully', data: updatedTribe })
