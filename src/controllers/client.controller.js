@@ -2,15 +2,12 @@ import Client from '../models/client.model.js'
 
 export const getClients = async (_req, res) => {
     try {
-        //.populate() sirve para que ademas de la info de clientes me traigan nombre y id del sector
-        const clients = await Client.find().populate( 
-        {
-            path: "sector_id",
-            select: "name"
-        })
+        const clients = await Client.find()
+        .populate({ path: "sector_id", select: "name" })
+        .lean()
 
         if(clients.length === 0) {
-            return res.status(204).json({ message: 'There are no clients in the database' })
+            return res.status(404).json({ message: 'There are no clients in the database' })
         }
 
         res.status(200).json(clients)
@@ -22,6 +19,10 @@ export const getClients = async (_req, res) => {
 export const getClientById = async (req, res) => {
     try {
         const client = await Client.findById(req.params.id)
+
+        if(!client) {
+            return res.status(404).json({ message: 'Client was not found' })
+        }
 
         res.status(200).json(client)
     } catch (error) {
@@ -44,7 +45,6 @@ export const createClient = async (req, res) => {
             sector_id,
             projects_id
         })
-
         const savedClient = await newClient.save()
 
         res.status(200).json({ message: 'Client successfully created', data: savedClient })
@@ -56,6 +56,10 @@ export const createClient = async (req, res) => {
 export const deleteClient = async (req, res) => {
     try {
         const deletedClient = await Client.findByIdAndDelete(req.params.id)
+
+        if(!deletedClient) {
+            return res.status(404).json({ message: 'Client was not found' })
+        }
         
         res.status(200).json({ message: 'Client successfully deleted', data: deletedClient })
     } catch (error) {
@@ -67,8 +71,13 @@ export const updateClient = async (req, res) => {
     try {
         const updatedClient = await Client.findByIdAndUpdate(req.params.id, req.body, {
             //Para que devuelva el cliente actualizado
-            new: true
+            new: true,
+            runValidators: true
         })
+
+        if(!updatedClient) {
+            return res.status(404).json({ message: 'Client was not found' })
+        }
 
         res.status(200).json({ message: 'Client successfully updated', data: updatedClient })
     } catch (error) {

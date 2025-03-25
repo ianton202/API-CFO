@@ -3,10 +3,11 @@ import Profile from '../models/profile.model.js';
 export const getProfiles = async (_req, res) => {
     try {
         const profiles = await Profile.find()
+        .lean()
 
-    if(profiles.length === 0) {
-        return res.status(203).json({ message: 'There are no profiles in the database' })
-    }
+        if(profiles.length === 0) {
+            return res.status(404).json({ message: 'There are no profiles in the database' })
+        }
 
         res.status(200).json(profiles)
     } catch (error) {
@@ -17,6 +18,11 @@ export const getProfiles = async (_req, res) => {
 export const getProfileById = async (req, res) => {
     try {
         const profile = await Profile.findById(req.params.id)
+        .lean()
+
+        if(!profile) {
+            return res.status(404).json({ message: 'Profile was not found' })
+        }
         
         res.status(200).json(profile)
     } catch (error) {
@@ -37,10 +43,9 @@ export const createProfile =  async (req, res) => {
         const newProfile = new Profile({
             name
         })
-
         const savedProfile = await newProfile.save()
 
-        res.status(200).json({ message: 'Profile successfully created', data: savedProfile})
+        res.status(201).json({ message: 'Profile successfully created', data: savedProfile})
     } catch (error) {
         res.status(500).json({ message: 'An error occurred while creating the sector', error: error.message || error })
     }
@@ -49,6 +54,10 @@ export const createProfile =  async (req, res) => {
 export const deleteProfile = async (req, res) => {
     try {
         const deletedProfile = await Profile.findByIdAndDelete(req.params.id)
+
+        if(!deletedProfile) {
+            return res.status(404).json({ message: 'Profile was not found' })
+        }
         
         res.status(200).json({ message: 'Profile successfully deleted', data: deletedProfile})
     } catch (error) {
@@ -59,8 +68,13 @@ export const deleteProfile = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const updatedProfile = await Profile.findByIdAndUpdate(req.params.id, req.body, {
-            new: true
+            new: true,
+            runValidators: true
         })
+
+        if (!updatedProfile) {
+            return res.status(404).json({ message: 'Profile was not found' });
+        }
 
         res.status(200).json({ message: 'Profile updated successfully', data: updatedProfile })
     } catch (error) {
