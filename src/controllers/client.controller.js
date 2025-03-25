@@ -4,6 +4,7 @@ export const getClients = async (_req, res) => {
     try {
         const clients = await Client.find()
         .populate({ path: "sector_id", select: "name" })
+        .populate({ path: "projects_id", select: "name" })
         .lean()
 
         if(clients.length === 0) {
