@@ -26,7 +26,7 @@ export const getTribeById = async (req, res) => {
 
 export const createTribe = async (req, res) => {
 
-    const { name, collaborators_id } = req.body
+    const { name, collaborator_id } = req.body
 
     try {
         const tribeExists = await Tribe.findOne({ name })
@@ -36,7 +36,7 @@ export const createTribe = async (req, res) => {
 
         const newTribe = new Tribe({
             name,
-            collaborators_id
+            collaborator_id
         })
 
         const savedTribe = await newTribe.save()

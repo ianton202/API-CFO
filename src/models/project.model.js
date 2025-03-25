@@ -17,10 +17,10 @@ const projectSchema = new mongoose.Schema({
         trim: true,
         ref: 'Tribe'
     },
-    collaborators_id: {
+    collaborator_id: {
         type: [mongoose.Schema.Types.ObjectId],
         trim: true,
-        ref: 'Collaborators'
+        ref: 'Collaborator'
     }
 });
 

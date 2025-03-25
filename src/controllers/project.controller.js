@@ -26,7 +26,7 @@ export const getProjectById = async (req, res) => {
 
 export const createProject = async (req, res) => {
     
-    const { name, client_id, tribe_id, collaborators_id } = req.body
+    const { name, client_id, tribe_id, collaborator_id } = req.body
     
     try {
         const projectExists = await Project.findOne({ name })
@@ -38,7 +38,7 @@ export const createProject = async (req, res) => {
             name,
             client_id,
             tribe_id,
-            collaborators_id
+            collaborator_id
         })
 
         const savedProject = await newProject.save()

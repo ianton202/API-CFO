@@ -6,9 +6,9 @@ const tribeSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    collaborators_id: {
+    collaborator_id: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: 'Collaborators'
+        ref: 'Collaborator'
     }
 });
 

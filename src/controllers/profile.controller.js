@@ -3,7 +3,6 @@ import Profile from '../models/profile.model.js';
 export const getProfiles = async (_req, res) => {
     try {
         const profiles = await Profile.find()
-        .lean()
 
         if(profiles.length === 0) {
             return res.status(404).json({ message: 'There are no profiles in the database' })
@@ -18,7 +17,6 @@ export const getProfiles = async (_req, res) => {
 export const getProfileById = async (req, res) => {
     try {
         const profile = await Profile.findById(req.params.id)
-        .lean()
 
         if(!profile) {
             return res.status(404).json({ message: 'Profile was not found' })

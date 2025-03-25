@@ -22,10 +22,10 @@ const collaboratorSchema = new mongoose.Schema({
         trim: true,
         ref: 'Tribe'
     },
-    projects_id: {
-        type: [mongoose.Schema.Types.ObjectId],
+    project_id: {
+        type: [mongoose.Schema.Types.ObjectId],  
         trim: true,
-        ref: 'Projects'
+        ref: 'Project'
     }
 });
 

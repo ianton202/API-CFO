@@ -10,7 +10,7 @@ const clientSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Sector'
     },
-    projects_id: {
+    project_id: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Project'
     }
