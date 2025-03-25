@@ -3,6 +3,7 @@ import Tribe from '../models/tribe.model.js';
 export const getTribes = async (_req, res) => {
     try {
         const tribes = await Tribe.find()
+        .populate({ path: 'collaborator_id', select: 'name' })
 
         if(tribes.length === 0) {
             return res.status(203).json({ message: 'There are no tribes in the database' })
@@ -17,6 +18,10 @@ export const getTribes = async (_req, res) => {
 export const getTribeById = async (req, res) => {
     try {
         const tribe = await Tribe.findById(req.params.id)
+
+        if(!tribe) {
+            return res.status(404).json({ message: 'Tribe was not found' })
+        }
 
         res.status(200).json(tribe)
     } catch (error) {
@@ -50,6 +55,10 @@ export const deleteTribe = async (req, res) => {
     try {
         const deletedTribe = await Tribe.findByIdAndDelete(req.params.id)
 
+        if(!deletedTribe) {
+            return res.status(404).json({ message: 'Tribe was not found' })
+        }
+
         res.status(200).json({ message: 'Tribe successfully deleted', data: deletedTribe})
     } catch (error) {
         res.status(500).json({ message: 'An error occurred while deleting the tribe', error: error.message || error })
@@ -62,6 +71,10 @@ export const updateTribe = async (req, res) => {
             new: true,
             runValidators: true
         })
+
+        if(!updatedTribe) {
+            return res.status(404).json({ message: 'Tribe was not found' })
+        }
 
         res.status(200).json({ message: 'Tribe updated successfully', data: updatedTribe })
     } catch (error) {
