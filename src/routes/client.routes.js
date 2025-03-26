@@ -21,7 +21,11 @@ router.get('/:id', authRequired,
 
 router.post('/', authRequired, 
     body('name')
-        .notEmpty().withMessage('Name cant be empty'),
+        .notEmpty().isString().withMessage('Name cant be empty and must be a string'),
+    body('sector_id')
+        .optional().isMongoId().withMessage('Invalid sector ID'),
+    body('project_id')
+        .optional().isMongoId().withMessage('Invalid project ID'),
     handleInputErrors,
     createClient)
 
