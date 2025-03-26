@@ -22,6 +22,7 @@ router.get('/:id', authRequired,
 router.post('/', authRequired,
     body('name')
         .notEmpty().isString().withMessage('Name cant be empty and must be a string'),
+    handleInputErrors,
     createProfile)
 
 router.delete('/:id', authRequired,
