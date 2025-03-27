@@ -1,4 +1,5 @@
-import Project from '../models/project.model.js';
+import Project from '../models/project.model.js'
+import Client from '../models/client.model.js'
 
 export const getProjects = async (_req, res) => {
     try {
@@ -51,6 +52,14 @@ export const createProject = async (req, res) => {
             collaborator_id
         })
         const savedProject = await newProject.save()
+
+        if(client_id) {
+            await Client.findByIdAndUpdate(
+                client_id,
+                { $push: { project_id: savedProject._id } },
+                { new: true }
+            )
+        }
         
         res.status(201).json({ message: 'Project successfully created', data: savedProject })
     } catch (error) {
@@ -60,11 +69,12 @@ export const createProject = async (req, res) => {
 
 export const deleteProject = async (req, res) => {
     try {
-        const deletedProject = await Project.findByIdAndDelete(req.params.id)
-
-        if(!deletedProject) {
+        const projectExists = await Project.findById(req.params.id)
+        if(!projectExists) {
             return res.status(404).json({ message: 'Project was not found' })
         }
+
+        const deletedProject = await Project.findByIdAndDelete(req.params.id)
 
         res.status(200).json({ message: 'Project successfully deleted', data: deletedProject })
     } catch (error) {
@@ -74,13 +84,32 @@ export const deleteProject = async (req, res) => {
 
 export const updateProject = async (req, res) => {
     try {
+        const projectExists = await Project.findById(req.params.id)
+        if(!projectExists) {
+            return res.status(404).json({ message: 'Project was not found' })
+        }
+
         const updatedProject = await Project.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true
         })
 
-        if(!updatedProject) {
-            return res.status(404).json({ message: 'Project was not found' })
+        const oldClientId = projectExists.client_id
+        const newClientId = req.body.client_id
+
+        if(newClientId) {
+            if(oldClientId && oldClientId.toString() !== newClientId.toString()) {
+                await Client.findByIdAndUpdate(
+                    oldClientId, 
+                    { $pull: { project_id: updatedProject._id } }
+                )
+            }
+
+            await Client.findByIdAndUpdate(
+                newClientId, 
+                { $addToSet: { project_id: updatedProject._id } }, 
+                { new: true }
+            )
         }
 
         res.status(200).json({ message: 'Project successfully updated', data: updatedProject })
