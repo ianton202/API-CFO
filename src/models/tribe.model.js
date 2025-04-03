@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const tribeSchema = new mongoose.Schema({
     name: {
@@ -6,10 +6,10 @@ const tribeSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    collaborator_id: {
+    project_id: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: 'Collaborator'
+        ref: 'Project'
     }
-});
+})
 
-export default mongoose.model('Tribe', tribeSchema);
+export default mongoose.model('Tribe', tribeSchema)

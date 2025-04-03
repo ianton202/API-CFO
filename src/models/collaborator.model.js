@@ -17,11 +17,6 @@ const collaboratorSchema = new mongoose.Schema({
         trim: true,
         ref: 'Profile'
     },
-    tribe_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        trim: true,
-        ref: 'Tribe'
-    },
     project_id: {
         type: [mongoose.Schema.Types.ObjectId],  
         trim: true,
