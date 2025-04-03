@@ -22,6 +22,8 @@ router.get('/:id', authRequired,
 router.post('/', authRequired,
     body('name')
         .notEmpty().isString().withMessage('Name cant be empty and must be a string'),
+    body('collaborator_id')
+        .optional().isMongoId().withMessage('Invalid collaborator ID'),
     handleInputErrors,
     createProfile)
 
@@ -36,6 +38,8 @@ router.put('/:id', authRequired,
         .isMongoId().withMessage('Invalid ID'),
     body('name')
         .optional().isString().withMessage('Name must be a string'),
+    body('collaborator_id')
+        .optional().isMongoId().withMessage('Invalid collaborator ID'),
     handleInputErrors,
     updateProfile)
 

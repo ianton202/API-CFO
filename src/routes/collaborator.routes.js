@@ -26,8 +26,6 @@ router.post('/', authRequired,
         .isEmail().withMessage('Email is invalid'),
     body('profile_id')
         .optional().isMongoId().withMessage('Invalid profile ID'),
-    body('tribe_id')
-        .optional().isMongoId().withMessage('Invalid tribe ID'),
     body('project_id')
         .optional().isMongoId().withMessage('Invalid project ID'),
     handleInputErrors,
@@ -48,8 +46,6 @@ router.put('/:id', authRequired,
         .optional().isEmail().withMessage('Email is invalid'),
     body('profile_id')
         .optional().isMongoId().withMessage('Invalid profile ID'),
-    body('tribe_id')
-        .optional().isMongoId().withMessage('Invalid tribe ID'),
     body('project_id')
         .optional().isMongoId().withMessage('Invalid project ID'),
     handleInputErrors,
