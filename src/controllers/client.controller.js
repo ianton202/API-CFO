@@ -50,8 +50,6 @@ export const createClient = async (req, res) => {
         const savedClient = await newClient.save()
 
         res.status(201).json({ message: 'Client successfully created', data: savedClient })
-        .populate({ path: 'sector_id', select: 'name' })
-        .populate({ path: 'project_id', select: 'name' })
     } catch (error) {
         res.status(500).json({ message: 'An error occurred while creating the client', error: error.message || error })
     }
@@ -74,7 +72,6 @@ export const deleteClient = async (req, res) => {
 export const updateClient = async (req, res) => {
     try {
         const updatedClient = await Client.findByIdAndUpdate(req.params.id, req.body, {
-            //Para que devuelva el cliente actualizado
             new: true,
             runValidators: true
         })
